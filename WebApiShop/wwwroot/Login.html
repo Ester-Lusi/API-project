@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="Login.js" defer></script>
+    <title>Login</title>
+    <style>
+        .log {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .hello{
+            display: grid;
+            align-items: center;
+            text-align: center;
+        }
+        .update{
+            display: flex;
+            flex-direction: column;
+            width: 20vw;
+            margin: 2vw;
+        }
+        .send{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="log">
+        <div>
+            <h1 class="hello">...!?אהלן, יצא לנו כבר להכיר אה </h1>
+        </div>
+        <div class="update">
+            <lable for="userName">מייל</lable>
+            <input type="email" id="userName" name="userName" required />
+            <lable for="firstName">שם פרטי</lable>
+            <input type="text" id="firstName" name="firstName" required />
+            <lable for="lastName">שם משפחה</lable>
+            <input type="text" id="lastName" name="lastName" required />
+            <lable for="password">סיסמא</lable>
+            <input type="password" id="password" name="password" required />
+            <button onClick="Update()" class="send">עדכון</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+﻿
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script  src="home.js" defer></script>
+    <title>API</title>
+
+    <style>
+        .cont {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .existUser {
+            display: flex;
+            flex-direction: column;
+            width: 20vw;
+            margin: 2vw;
+        }
+
+        .newUser {
+            display: flex;
+            flex-direction: column;
+            width: 20vw;
+            margin: 2vw;
+        }
+        .send {
+            margin-top: 20px;
+        }
+        .checkPass{
+            margin:10px;
+        }
+        .progressBar{
+            width:20vw;
+            height:1.5vh;
+            border:solid 1px black;
+        }
+    </style>
+
+</head>
+<body>
+    <!--<button onClick="getResponse()">GET API</button>
+    <button onClick="postRequest()">POST API</button>-->
+
+    <div class="cont">
+        <div class="existUser">
+            <h3>משתמש רשום</h3>
+            <lable for="userName">מייל</lable>
+            <input type="email" id="userNameLog" required />
+            <lable for="password">סיסמא</lable>
+            <input type="password" id="passwordLog" required />
+            <button onClick="Login()" class="send">כניסה</button>
+        </div>
+
+        <div class="newUser">
+            <h3>משתמש חדש</h3>
+            <lable for="userName">מייל</lable>
+            <input type="email" id="userName" name="userName" required />
+            <lable for="firstName">שם פרטי</lable>
+            <input type="text" id="firstName" name="firstName" required />
+            <lable for="lastName">שם משפחה</lable>
+            <input type="text" id="lastName" name="lastName" required />
+            <lable for="password">סיסמא</lable>
+            <input type="password" id="password" name="password" required />
+            <button class="checkPass" onclick="checkPasswordStrength()">בדיקת חוזק סיסמא</button>
+            <progress class="progressBar" max="100" ></progress>
+            <button onClick="newUser()" class="send">הרשמה</button>
+        </div>
+
+    </div>
+
+</body>
+</html>
