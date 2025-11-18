@@ -23,7 +23,7 @@ namespace Services
         }
         public User AddUser(User user)
         {
-            if (_iPasswordService.checkStrength(user.Password).Strength < 2)
+            if (_iPasswordService.CheckStrength(user.Password).Strength < 2)
                 return null;
             return _iUserRepository.AddUser(user);
         }
@@ -33,11 +33,10 @@ namespace Services
         }
         public int UpdateUser(int id, User user)
         {
-
-            var Result = Zxcvbn.Core.EvaluatePassword(user.Password);
-            if (Result.Score > 2)
+            var result = Zxcvbn.Core.EvaluatePassword(user.Password);
+            if (result.Score > 2)
                 _iUserRepository.UpdateUser(id, user);
-            return Result.Score;
+            return result.Score;
         }
         public void DeleteUser(int id)
         {

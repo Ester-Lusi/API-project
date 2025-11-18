@@ -12,7 +12,7 @@ namespace WebApiShop.Controllers
     [ApiController]
     public class UsersController : ControllerBase, IUsersController
     {
-        UserService _userService;
+        private readonly UserService _userService;
         public UsersController(UserService userService)
         {
             _userService = userService;
@@ -26,14 +26,14 @@ namespace WebApiShop.Controllers
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-
         public ActionResult<User> GetById(int id)
         {
-            if (_userService.GetById(id) == null)
+            User user = _userService.GetById(id);
+            if (user == null)
             {
-                return NoContent();
+                return NotFound();
             }
-            return Ok(_userService.GetById(id));
+            return Ok(user);
         }
 
         // POST api/<UsersController>
@@ -53,9 +53,8 @@ namespace WebApiShop.Controllers
         {
             User userResult = _userService.FindUser(user);
             if (userResult == null)
-                return NotFound();
-            return CreatedAtAction(nameof(Get), new { userResult.Id }, userResult);
-
+                return Unauthorized();
+            return Ok(userResult);
         }
 
 
