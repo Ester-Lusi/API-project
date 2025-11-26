@@ -6,7 +6,7 @@ namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
-        string _filePath = "users.txt";
+        private readonly string _filePath = "users.txt";
         public IEnumerable<string> Get()
         {
             return new string[] { "User1", "User2" };
@@ -59,8 +59,8 @@ namespace Repositories
                 string? currentUserInFile;
                 while ((currentUserInFile = reader.ReadLine()) != null)
                 {
-                    User? newUser = JsonSerializer.Deserialize<User>(currentUserInFile);
-                    if (newUser.Id == id)
+                    User? existingUser = JsonSerializer.Deserialize<User>(currentUserInFile);
+                    if (existingUser.Id == id)
                         textToReplace = currentUserInFile;
                 }
             }

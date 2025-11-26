@@ -10,13 +10,13 @@ namespace Services
 {
     public class PasswordService : IPasswordService
     {
-        public Password checkStrength(string password)
+        public Password CheckStrength(string password)
         {
-            var Result = Zxcvbn.Core.EvaluatePassword(password);
-            int Strength = Result.Score;
+            var result = Zxcvbn.Core.EvaluatePassword(password);
+            int strength = result.Score;
             Password passwordEntity = new Password();
             passwordEntity.Pass = password;
-            passwordEntity.Strength = Strength;
+            passwordEntity.Strength = strength;
             return passwordEntity;
         }
     }
