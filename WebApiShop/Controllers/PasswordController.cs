@@ -8,10 +8,10 @@ namespace WebApiShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PasswordController : ControllerBase, IPasswordController
+    public class PasswordController: ControllerBase, IPasswordController
     {
-        private readonly PasswordService _passwordService;
-        public PasswordController(PasswordService passwordService)
+        private IPasswordService _passwordService;
+        public PasswordController(IPasswordService passwordService)
         {
             _passwordService = passwordService;
         }

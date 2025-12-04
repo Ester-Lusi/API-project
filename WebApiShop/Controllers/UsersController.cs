@@ -12,23 +12,24 @@ namespace WebApiShop.Controllers
     [ApiController]
     public class UsersController : ControllerBase, IUsersController
     {
-        private readonly UserService _userService;
-        public UsersController(UserService userService)
+        private IUserService _userService;
+        public UsersController(IUserService userService)
         {
             _userService = userService;
         }
         // GET: api/<UsersController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<User>>> Get()
         {
-            return _userService.Get();
+            IEnumerable<User> users = await _userService.GetUsers();
+            return Ok(users);
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public ActionResult<User> GetById(int id)
+        public async Task<ActionResult<User>> GetById(int id)
         {
-            User user = _userService.GetById(id);
+            User user = await _userService.GetById(id);
             if (user == null)
             {
                 return NotFound();
@@ -38,20 +39,20 @@ namespace WebApiShop.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public ActionResult<User> Post([FromBody] User user)
+        public async Task<ActionResult<User>> Post([FromBody] User user)
         {
-            User userResult = _userService.AddUser(user);
+            User userResult = await _userService.AddUser(user);
             if (userResult == null)
             {
-                return BadRequest("אחד השדות ריקים או סיסמא חלשה");
+                return BadRequest("סיסמא חלשה");
             }
             return CreatedAtAction(nameof(Get), new { user.Id }, user);
         }
 
         [HttpPost("Login")]
-        public ActionResult<User> Login([FromBody] User user)
+        public async Task<ActionResult<User>> Login([FromBody] User user)
         {
-            User userResult = _userService.FindUser(user);
+            User userResult = await _userService.FindUser(user);
             if (userResult == null)
                 return Unauthorized();
             return Ok(userResult);
@@ -60,9 +61,9 @@ namespace WebApiShop.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(int id, [FromBody] User user)
+        public async Task<ActionResult> UpdateUser(int id, [FromBody] User user)
         {
-            var result = _userService.UpdateUser(id, user);
+            var result = await _userService.UpdateUser(id, user);
             if (result < 2)
                 return BadRequest("רישום נכשל - סיסמא חלשה");
             return Ok(user);
