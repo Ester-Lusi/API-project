@@ -54,7 +54,7 @@ namespace WebApiShop.Controllers
         {
             User userResult = await _userService.FindUser(user);
             if (userResult == null)
-                return Unauthorized();
+                return Unauthorized("Invalid credentials");
             return Ok(userResult);
         }
 
@@ -64,6 +64,8 @@ namespace WebApiShop.Controllers
         public async Task<ActionResult> UpdateUser(int id, [FromBody] User user)
         {
             var result = await _userService.UpdateUser(id, user);
+            if (result < 0)
+                return NotFound("User not found");
             if (result < 2)
                 return BadRequest("רישום נכשל - סיסמא חלשה");
             return Ok(user);

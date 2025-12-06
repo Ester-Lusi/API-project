@@ -5,42 +5,42 @@ namespace Services
 {
     public class UserService : IUserService
     {
-        IUserRepository _iUserRepository;
-        IPasswordService _iPasswordService;
+        IUserRepository _userRepository;
+        IPasswordService _passwordService;
         public UserService(IUserRepository iUserRepository, IPasswordService iPasswordService)
         {
-            _iUserRepository = iUserRepository;
-            _iPasswordService = iPasswordService;
+            _userRepository = iUserRepository;
+            _passwordService = iPasswordService;
         }
 
         public async Task<IEnumerable<User>> GetUsers()
         {
-            return await _iUserRepository.GetUsers();
+            return await _userRepository.GetUsers();
         }
         public async Task<User> GetById(int id)
         {
-            return await _iUserRepository.GetById(id);
+            return await _userRepository.GetById(id);
         }
         public async Task<User> AddUser(User user)
         {
-            if (_iPasswordService.CheckStrength(user.Password).Strength < 2)
+            if (_passwordService.CheckStrength(user.Password).Strength < 2)
                 return null;
-            return await _iUserRepository.AddUser(user);
+            return await _userRepository.AddUser(user);
         }
         public async Task<User> FindUser(User user)
         {
-            return await _iUserRepository.FindUser(user);
+            return await _userRepository.FindUser(user);
         }
         public async Task<int> UpdateUser(int id, User user)
         {
             var result = Zxcvbn.Core.EvaluatePassword(user.Password);
-            if (result.Score > 2)
-                _iUserRepository.UpdateUser(id, user);
+            if (result.Score >= 2)
+                await _userRepository.UpdateUser(id, user);
             return result.Score;
         }
         public void DeleteUser(int id)
         {
-            _iUserRepository.DeleteUser(id);
+            _userRepository.DeleteUser(id);
         }
 
     }

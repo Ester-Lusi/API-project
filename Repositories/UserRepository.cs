@@ -17,7 +17,7 @@ namespace Repositories
 
         public async Task<IEnumerable<User>> GetUsers()
         {
-            return _dbContext.Users;
+            return await Task.FromResult(_dbContext.Users);
         }
         public async Task<User> GetById(int id)
         {
@@ -27,7 +27,7 @@ namespace Repositories
         public async Task<User> AddUser(User user)
         {
             await _dbContext.Users.AddAsync(user);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return user;
         }
 
@@ -43,10 +43,10 @@ namespace Repositories
             }
         }
 
-        public async void UpdateUser(int id, User user)
+        public async Task UpdateUser(int id, User user)
         {
             _dbContext.Users.Update(user);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
         public void DeleteUser(int id)
         {

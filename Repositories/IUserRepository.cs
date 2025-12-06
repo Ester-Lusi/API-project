@@ -8,7 +8,7 @@ namespace Repositories
         void DeleteUser(int id);
         Task<User> FindUser(User user);
         Task<User> GetById(int id);
-        void UpdateUser(int id, User user);
+        Task UpdateUser(int id, User user);
         Task<IEnumerable<User>> GetUsers();
     }
 }
