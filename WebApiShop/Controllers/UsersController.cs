@@ -10,7 +10,7 @@ namespace WebApiShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase, IUsersController
+    public class UsersController : ControllerBase
     {
         private IUserService _userService;
         public UsersController(IUserService userService)
@@ -32,7 +32,7 @@ namespace WebApiShop.Controllers
             User user = await _userService.GetById(id);
             if (user == null)
             {
-                return NotFound();
+                return NoContent();
             }
             return Ok(user);
         }

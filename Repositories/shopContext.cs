@@ -5,43 +5,99 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Entities;
 
-
 namespace Repositories;
 
-public partial class ShopContext : DbContext
+public partial class shopContext : DbContext
 {
-    public ShopContext(DbContextOptions<ShopContext> options)
+    public shopContext(DbContextOptions<shopContext> options)
         : base(options)
     {
     }
 
-    public virtual Microsoft.EntityFrameworkCore.DbSet<User> Users { get; set; }
+    public virtual DbSet<Category> Categories { get; set; }
 
-    protected void OnModelCreating(ModelBuilder modelBuilder)
+    public virtual DbSet<Order> Orders { get; set; }
+
+    public virtual DbSet<OrderItem> OrderItems { get; set; }
+
+    public virtual DbSet<Product> Products { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.Property(e => e.CategoryId).HasColumnName("Category_id");
+            entity.Property(e => e.CategoryName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("Category_name");
+        });
+
+        modelBuilder.Entity<Order>(entity =>
+        {
+            entity.Property(e => e.OrderId).HasColumnName("Order_id");
+            entity.Property(e => e.OrderDate).HasColumnName("Order_date");
+            entity.Property(e => e.OrderSum).HasColumnName("Order_sum");
+            entity.Property(e => e.UserId).HasColumnName("User_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Orders_Users1");
+        });
+
+        modelBuilder.Entity<OrderItem>(entity =>
+        {
+            entity.ToTable("Order_Items");
+
+            entity.Property(e => e.OrderItemId).HasColumnName("Order_Item_id");
+            entity.Property(e => e.OrderId).HasColumnName("Order_id");
+            entity.Property(e => e.ProductId).HasColumnName("Product_id");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Order_Items_Orders");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Order_Items_Products");
+        });
+
+        modelBuilder.Entity<Product>(entity =>
+        {
+            entity.Property(e => e.ProductId).HasColumnName("Product_id");
+            entity.Property(e => e.CategotyId).HasColumnName("Categoty_id");
+            entity.Property(e => e.Description).HasMaxLength(100);
+            entity.Property(e => e.Price).HasColumnType("money");
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("Product_name");
+
+            entity.HasOne(d => d.Categoty).WithMany(p => p.Products)
+                .HasForeignKey(d => d.CategotyId)
+                .HasConstraintName("FK_Products_Categories");
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_Users");
+            entity.HasKey(e => e.Id).HasName("PK_hi");
 
-            entity.ToTable("User");
-
-            entity.Property(e => e.Email)
-                .HasMaxLength(50)
-                .IsFixedLength();
-            entity.Property(e => e.FirstName)
-                .HasMaxLength(50)
-                .IsFixedLength();
-            entity.Property(e => e.LastName)
-                .HasMaxLength(50)
-                .IsFixedLength();
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Email).HasMaxLength(50);
+            entity.Property(e => e.FirstName).HasMaxLength(50);
+            entity.Property(e => e.LastName).HasMaxLength(50);
             entity.Property(e => e.Password)
-                .HasMaxLength(12)
-                .IsFixedLength();
+                .IsRequired()
+                .HasMaxLength(50);
         });
 
         OnModelCreatingPartial(modelBuilder);
     }
-
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
