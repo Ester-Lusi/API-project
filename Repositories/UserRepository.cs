@@ -1,16 +1,17 @@
-﻿using System.Linq;
-using System.Text.Json;
-using Entities;
+﻿using Entities;
 using Foundatio.Utility;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Text.Json;
+
 
 
 namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
-        ShopContext _dbContext;
-        public UserRepository(ShopContext context)
+        shopContext _dbContext;
+        public UserRepository(shopContext context)
         {
             _dbContext = context;
         }
@@ -33,14 +34,7 @@ namespace Repositories
 
         public async Task<User> FindUser(User user)
         {
-            try
-            {
-                return await _dbContext.Users.FindAsync(user);
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            return await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password);
         }
 
         public async Task UpdateUser(int id, User user)

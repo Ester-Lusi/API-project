@@ -1,20 +1,20 @@
 ﻿
-//
-async function getResponse() {
-    try {
-        const response = await fetch('https://localhost:44398/api/Users');
-        if (response.ok) {
-            const data = await response.json();
-            alert(data);
-        }
-        else {
-            throw new Error('error');
-        }
-    }
-    catch (e) {
-        console.log(e);
-    }
-}
+////שיעורי-בית
+//async function getResponse() {
+//    try {
+//        const response = await fetch('https://localhost:44398/api/Users');
+//        if (response.ok) {
+//            const data = await response.json();
+//            alert(data);
+//        }
+//        else {
+//            throw new Error('error');
+//        }
+//    }
+//    catch (e) {
+//        console.log(e);
+//    }
+//}
 
 //כניסת משתמש חדש
 function NewUser() {
@@ -62,14 +62,14 @@ async function newUser() {
 
 //כניסת משתמש שמור
 function LogUser() {
-    const Email = document.querySelector("#userNameLog");
-    const password = document.querySelector("#passwordLog");
+    const Email = document.querySelector("#userNameLog").value;
+    const password = document.querySelector("#passwordLog").value;
 
     const postDataLog = {
-        Email: Email.value,
+        Email: Email,
         firstName: "",
         lastName: "",
-        password: password.value,
+        password: password,
     };
     return postDataLog;
 }
@@ -78,6 +78,7 @@ async function Login() {
     try {
 
         const postDataLog = LogUser();
+        console.log(postDataLog);
         const response = await fetch('https://localhost:44398/api/Users/Login', {
             method: 'POST',
             headers: {
@@ -94,7 +95,7 @@ async function Login() {
             window.location.href = "../Login.html";
         }
         else {
-            alert("שם או סיסמא שגויים");
+            alert("משתמש אינו רשום במערכת או שם/סיסמא שגויים");
         }
     }
     catch (e) {
