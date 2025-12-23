@@ -33,23 +33,26 @@ namespace Services
             UserDto userDto = _imapper.Map<User, UserDto>(user);
             return userDto;
         }
-        public async Task<UserDto> AddUser(User user)
+        public async Task<UserDto> AddUser(UserDto user)
         {
             if (_iPasswordService.CheckStrength(user.Password).Strength < 2)
                 return null;
-            User user1 = await _iUserRepository.AddUser(user);
+            User userDtoToUser = _imapper.Map<UserDto, User>(user);
+            User user1 = await _iUserRepository.AddUser(userDtoToUser);
             UserDto userDto = _imapper.Map<User, UserDto>(user1);
             return userDto;
         }
-        public async Task<User> FindUser(User user)
+        public async Task<User> FindUser(UserDto user)
         {
-            return await _iUserRepository.FindUser(user);
+            User userDtoToUser = _imapper.Map<UserDto, User>(user);
+            return await _iUserRepository.FindUser(userDtoToUser);
         }
-        public async Task<int> UpdateUser(int id, User user)
+        public async Task<int> UpdateUser(int id, UserDto user)
         {
+            User userDtoToUser = _imapper.Map<UserDto, User>(user);
             var result = Zxcvbn.Core.EvaluatePassword(user.Password);
             if (result.Score > 2)
-                _iUserRepository.UpdateUser(id, user);
+                _iUserRepository.UpdateUser(id, userDtoToUser);
             return result.Score;
         }
         public void DeleteUser(int id)

@@ -15,7 +15,7 @@ namespace Repositories
         {
             _dbContext = context;
         }
-        public async Task<List<Category>> GetCategory()
+        public async Task<IEnumerable<Category>> GetCategory()
         {
             return await _dbContext.Categories.ToListAsync();
         }

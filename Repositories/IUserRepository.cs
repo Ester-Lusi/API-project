@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using Dtos;
+using Entities;
 
 namespace Repositories
 {
@@ -8,7 +9,7 @@ namespace Repositories
         void DeleteUser(int id);
         Task<User> FindUser(User user);
         Task<User> GetById(int id);
-        void UpdateUser(int id, User user);
         Task<IEnumerable<User>> GetUsers();
+        void UpdateUser(int id, User user);
     }
 }

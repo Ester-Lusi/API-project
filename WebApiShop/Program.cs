@@ -20,7 +20,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddDbContext<shopContext>(options => options.UseSqlServer(
-    "Data Source=srv2\\pupils;Initial Catalog=ApiShop_215899980;Integrated Security=True;Trust Server Certificate=True"));
+    "Data Source=srv2\\pupils;Initial Catalog=ApiShop_215899980;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();

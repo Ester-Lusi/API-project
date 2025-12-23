@@ -20,10 +20,10 @@ namespace Services
             _iCategoryRepository = iCategoryRepository;
             _imapper = mapper;
         }
-        public async Task<List<CategoryDto>> GetCategory()
+        public async Task<IEnumerable<CategoryDto>> GetCategory()
         {
-            List<Category> cayegoryList = await _iCategoryRepository.GetCategory();
-            List<CategoryDto> categoryDtos = _imapper.Map<List<Category>, List<CategoryDto>>(cayegoryList);
+            IEnumerable<Category> cayegoryList = await _iCategoryRepository.GetCategory();
+            IEnumerable<CategoryDto> categoryDtos = _imapper.Map<IEnumerable<Category>, IEnumerable<CategoryDto>>(cayegoryList);
             return categoryDtos;
         }
     }

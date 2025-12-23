@@ -1,12 +1,13 @@
-﻿namespace Dtos
+﻿using Entities;
+
+namespace Dtos
 {
     public record OrderDto
     (
         int OrderId,
         DateOnly? OrderDate,
         int OrderSum,
-        int UserId,
-        string UserFirstName,
-        string UserLastName
+        IEnumerable<OrderDto> OrderItems,
+        int UserId
     );
 }

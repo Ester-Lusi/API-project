@@ -38,7 +38,7 @@ namespace WebApiShop.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public async Task<ActionResult<UserDto>> Post([FromBody] User user)
+        public async Task<ActionResult<UserDto>> Post([FromBody] UserDto user)
         {
             UserDto userResult = await _userService.AddUser(user);
             if (userResult == null)
@@ -47,7 +47,7 @@ namespace WebApiShop.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<User>> Login([FromBody] User user)
+        public async Task<ActionResult<User>> Login([FromBody] UserDto user)
         {
             User userResult = await _userService.FindUser(user);
             if (userResult == null)
@@ -58,7 +58,7 @@ namespace WebApiShop.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUser(int id, [FromBody] User user)
+        public async Task<ActionResult> UpdateUser(int id, [FromBody] UserDto user)
         {
             var result = await _userService.UpdateUser(id, user);
             if (result < 2)
