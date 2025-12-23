@@ -1,4 +1,6 @@
-﻿using Entities;
+﻿using AutoMapper;
+using Dtos;
+using Entities;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,13 +13,18 @@ namespace Services
     public class CategoryService : ICategoryService
     {
         ICategoryRepository _iCategoryRepository;
-        public CategoryService(ICategoryRepository iCategoryRepository)
+        //AutoMapper _imapper;
+        IMapper _imapper;
+        public CategoryService(ICategoryRepository iCategoryRepository, IMapper mapper)
         {
             _iCategoryRepository = iCategoryRepository;
+            _imapper = mapper;
         }
-        public async Task<List<Category>> GetCategory()
+        public async Task<List<CategoryDto>> GetCategory()
         {
-            return await _iCategoryRepository.GetCategory();
+            List<Category> cayegoryList = await _iCategoryRepository.GetCategory();
+            List<CategoryDto> categoryDtos = _imapper.Map<List<Category>, List<CategoryDto>>(cayegoryList);
+            return categoryDtos;
         }
     }
 }

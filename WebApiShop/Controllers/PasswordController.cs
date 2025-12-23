@@ -21,9 +21,7 @@ namespace WebApiShop.Controllers
         {
             Password pass = _passwordService.CheckStrength(password);
             if (pass == null)
-            {
                 return NoContent();
-            }
             return Ok(pass);
         }
     }

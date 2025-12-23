@@ -27,7 +27,7 @@ namespace Repositories
 
         public async Task<User> AddUser(User user)
         {
-            _dbContext.Users.AddAsync(user);
+            await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
             return user;
         }
@@ -40,7 +40,7 @@ namespace Repositories
         public async void UpdateUser(int id, User user)
         {
             _dbContext.Users.Update(user);
-            _dbContext.SaveChanges();
+            _dbContext.SaveChangesAsync();
         }
         public void DeleteUser(int id)
         {

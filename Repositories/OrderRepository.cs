@@ -21,7 +21,7 @@ namespace Repositories
         }
         public async Task<Order> AddOrder(Order order)
         {
-            _dbContext.Orders.AddAsync(order);
+            await _dbContext.Orders.AddAsync(order);
             await _dbContext.SaveChangesAsync();
             return order;
         }

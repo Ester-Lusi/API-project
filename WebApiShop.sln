@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositorie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{486E7694-B363-4EAE-954D-89994CD36C58}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dtos", "Dtos\Dtos.csproj", "{4E3BF00D-184D-46EB-91AC-0E9581010152}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{486E7694-B363-4EAE-954D-89994CD36C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{486E7694-B363-4EAE-954D-89994CD36C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{486E7694-B363-4EAE-954D-89994CD36C58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E3BF00D-184D-46EB-91AC-0E9581010152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E3BF00D-184D-46EB-91AC-0E9581010152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E3BF00D-184D-46EB-91AC-0E9581010152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E3BF00D-184D-46EB-91AC-0E9581010152}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using Services;
+using Dtos;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -19,33 +20,29 @@ namespace WebApiShop.Controllers
         }
         // GET: api/<UsersController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Get()
+        public async Task<ActionResult<IEnumerable<UserDto>>> Get()
         {
-            IEnumerable<User> users = await _userService.GetUsers();
+            IEnumerable<UserDto> users = await _userService.GetUsers();
             return Ok(users);
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetById(int id)
+        public async Task<ActionResult<UserDto>> GetById(int id)
         {
-            User user = await _userService.GetById(id);
+            UserDto user = await _userService.GetById(id);
             if (user == null)
-            {
                 return NoContent();
-            }
             return Ok(user);
         }
 
         // POST api/<UsersController>
         [HttpPost]
-        public async Task<ActionResult<User>> Post([FromBody] User user)
+        public async Task<ActionResult<UserDto>> Post([FromBody] User user)
         {
-            User userResult = await _userService.AddUser(user);
+            UserDto userResult = await _userService.AddUser(user);
             if (userResult == null)
-            {
                 return BadRequest("סיסמא חלשה");
-            }
             return CreatedAtAction(nameof(Get), new { user.Id }, user);
         }
 

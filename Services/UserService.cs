@@ -1,5 +1,9 @@
-﻿using Repositories;
+﻿using AutoMapper;
+using Dtos;
 using Entities;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Repositories;
+using System.Collections.Generic;
 
 namespace Services
 {
@@ -7,25 +11,35 @@ namespace Services
     {
         IUserRepository _iUserRepository;
         IPasswordService _iPasswordService;
-        public UserService(IUserRepository iUserRepository, IPasswordService iPasswordService)
+        //AutoMapper _imapper;
+        IMapper _imapper;
+
+        public UserService(IUserRepository iUserRepository, IPasswordService iPasswordService, IMapper mapper)
         {
             _iUserRepository = iUserRepository;
             _iPasswordService = iPasswordService;
+            _imapper = mapper;
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<UserDto>> GetUsers()
         {
-            return await _iUserRepository.GetUsers();
+            IEnumerable<User> users = await _iUserRepository.GetUsers();
+            IEnumerable<UserDto> usersDto = _imapper.Map<IEnumerable<User>, IEnumerable<UserDto>>(users);
+            return usersDto;
         }
-        public async Task<User> GetById(int id)
+        public async Task<UserDto> GetById(int id)
         {
-            return await _iUserRepository.GetById(id);
+            User user = await _iUserRepository.GetById(id);
+            UserDto userDto = _imapper.Map<User, UserDto>(user);
+            return userDto;
         }
-        public async Task<User> AddUser(User user)
+        public async Task<UserDto> AddUser(User user)
         {
             if (_iPasswordService.CheckStrength(user.Password).Strength < 2)
                 return null;
-            return await _iUserRepository.AddUser(user);
+            User user1 = await _iUserRepository.AddUser(user);
+            UserDto userDto = _imapper.Map<User, UserDto>(user1);
+            return userDto;
         }
         public async Task<User> FindUser(User user)
         {
