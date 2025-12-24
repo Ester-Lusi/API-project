@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using Repositories;
 using Services;
 
@@ -19,10 +20,13 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+
 builder.Services.AddDbContext<shopContext>(options => options.UseSqlServer(
-    "Data Source=srv2\\pupils;Initial Catalog=ApiShop_215899980;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
+    builder.Configuration.GetConnectionString("DeafultConnection")));
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Host.UseNLog();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
