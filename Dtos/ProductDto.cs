@@ -5,7 +5,7 @@
         int ProductId,
         string ProductName,
         int Price,
-        string CategoryName,
+        CategoryDto CategoryName,
         string Description
     );
 }

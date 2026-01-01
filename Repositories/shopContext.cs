@@ -9,6 +9,7 @@ namespace Repositories;
 
 public partial class shopContext : DbContext
 {
+    public shopContext() { }
     public shopContext(DbContextOptions<shopContext> options)
         : base(options)
     {
@@ -70,7 +71,7 @@ public partial class shopContext : DbContext
         modelBuilder.Entity<Product>(entity =>
         {
             entity.Property(e => e.ProductId).HasColumnName("Product_id");
-            entity.Property(e => e.CategotyId).HasColumnName("Categoty_id");
+            entity.Property(e => e.CategoryId).HasColumnName("Categoty_id");
             entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.Price).HasColumnType("money");
             entity.Property(e => e.ProductName)
@@ -79,7 +80,7 @@ public partial class shopContext : DbContext
                 .HasColumnName("Product_name");
 
             entity.HasOne(d => d.Categoty).WithMany(p => p.Products)
-                .HasForeignKey(d => d.CategotyId)
+                .HasForeignKey(d => d.CategoryId)
                 .HasConstraintName("FK_Products_Categories");
         });
 

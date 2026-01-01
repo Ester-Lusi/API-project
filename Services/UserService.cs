@@ -7,11 +7,10 @@ using System.Collections.Generic;
 
 namespace Services
 {
-    public class UserService : IUserService
+    public class UserService :IUserService
     {
         IUserRepository _iUserRepository;
         IPasswordService _iPasswordService;
-        //AutoMapper _imapper;
         IMapper _imapper;
 
         public UserService(IUserRepository iUserRepository, IPasswordService iPasswordService, IMapper mapper)
@@ -33,27 +32,31 @@ namespace Services
             UserDto userDto = _imapper.Map<User, UserDto>(user);
             return userDto;
         }
-        public async Task<UserDto> AddUser(UserDto user)
+        public async Task<UserDto> AddUser(UserDto user, string Password)
         {
-            if (_iPasswordService.CheckStrength(user.Password).Strength < 2)
+            if (_iPasswordService.GetStrength(Password).Strength < 2)
                 return null;
             User userDtoToUser = _imapper.Map<UserDto, User>(user);
             User user1 = await _iUserRepository.AddUser(userDtoToUser);
             UserDto userDto = _imapper.Map<User, UserDto>(user1);
             return userDto;
         }
-        public async Task<User> FindUser(UserDto user)
+        public async Task<UserDto> FindUser(LoginUser user)
         {
-            User userDtoToUser = _imapper.Map<UserDto, User>(user);
-            return await _iUserRepository.FindUser(userDtoToUser);
+            User res = await _iUserRepository.FindUser(user);
+            UserDto userDTO = _imapper.Map<User, UserDto>(res);
+            return userDTO;
         }
-        public async Task<int> UpdateUser(int id, UserDto user)
+        public async Task<bool> UpdateUser(int id, UserDto user, string Password)
         {
-            User userDtoToUser = _imapper.Map<UserDto, User>(user);
-            var result = Zxcvbn.Core.EvaluatePassword(user.Password);
-            if (result.Score > 2)
-                _iUserRepository.UpdateUser(id, userDtoToUser);
-            return result.Score;
+            Password pass = _iPasswordService.GetStrength(Password);
+            if (pass.Strength < 2)
+                return false;
+            User userToUpdate = _imapper.Map<UserDto,User>(user);
+            userToUpdate.Id = id;
+            userToUpdate.Password = Password;
+            await _iUserRepository.UpdateUser(userToUpdate);
+            return true;
         }
         public void DeleteUser(int id)
         {

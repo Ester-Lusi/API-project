@@ -33,12 +33,12 @@ namespace Repositories
             return user;
         }
 
-        public async Task<User> FindUser(User user)
+        public async Task<User?> FindUser(LoginUser user)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password);
         }
 
-        public async void UpdateUser(int id, User user)
+        public async Task UpdateUser(User user)
         {
             _dbContext.Users.Update(user);
             _dbContext.SaveChangesAsync();

@@ -20,7 +20,7 @@ namespace WebApiShop.Controllers
         [HttpPost]
         public ActionResult<Password> Post([FromBody] string password)
         {
-            Password pass = _passwordService.CheckStrength(password);
+            Password pass = _passwordService.GetStrength(password);
             if (pass == null)
                 return NoContent();
             return Ok(pass);

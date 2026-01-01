@@ -20,13 +20,18 @@ namespace Services
             _iProductRepository = iProductRepository;
             _imapper = mapper;
         }
-        public async Task<IEnumerable<ProductDto>> GetProducts(string? name,
-            int[]? categories, int? nimPrice, int? maxPrice, int? limit,
-            string? orderBy, int? offset)
+        public async Task<PageResponseDto<ProductDto>> GetProducts(string? name, int?[] categories, int? minPrice, int? maxPrice, int? position, int skip, string? orderBy, string? description)
         {
-            IEnumerable<Product> products = await _iProductRepository.GetProducts(name, categories, nimPrice, maxPrice, limit, orderBy, offset);
-            IEnumerable<ProductDto> productsDto = _imapper.Map< IEnumerable < Product> ,IEnumerable <ProductDto>>(products);
-            return productsDto;
+            List<Product> products;
+            PageResponseDto<ProductDto> pageResponse = new PageResponseDto<ProductDto>();
+            (products, pageResponse.TotalItems) = await _iProductRepository.GetProducts(name, categories, minPrice, maxPrice, position, skip, orderBy, description);
+            pageResponse.Data = _imapper.Map<List<Product>, List<ProductDto>>(products);
+            pageResponse.CurrentPage = position ?? 1;
+            pageResponse.HasPreviousPage = pageResponse.CurrentPage > 1;
+            pageResponse.HasNextPage = (pageResponse.TotalItems / skip) > (pageResponse.CurrentPage - 1);
+            pageResponse.PageSize = skip;
+            return pageResponse;
         }
+
     }
 }

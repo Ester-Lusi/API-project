@@ -9,16 +9,13 @@ using Entities;
 
 namespace Services
 {
-    public class PasswordService : IPasswordService
+    public class PasswordService :IPasswordService
     {
-        public Password CheckStrength(string password)
+        public Password GetStrength(string password)
         {
             var result = Zxcvbn.Core.EvaluatePassword(password);
-            int strength = result.Score;
-            Password passwordEntity = new Password();
-            passwordEntity.Pass = password;
-            passwordEntity.Strength = strength;
-            return passwordEntity;
+            Password pass = new() { Pass = password, Strength = result.Score };
+            return pass;
         }
     }
 }

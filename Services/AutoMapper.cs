@@ -13,6 +13,7 @@ namespace Services
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<Order, OrderDto>().ReverseMap();
+            CreateMap<OrderItem, OrderItemsDto>().ReverseMap();
         }
     }
 }

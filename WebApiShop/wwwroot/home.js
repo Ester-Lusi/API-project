@@ -51,7 +51,7 @@ async function newUser() {
             alert("סיסמא חלשה")
         }
         else {
-            alert(" לא נירשמת בהצלחה");
+            alert("לא נירשמת בהצלחה");
         }
     }
     catch (e)
