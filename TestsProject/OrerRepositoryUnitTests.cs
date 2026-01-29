@@ -13,13 +13,13 @@ namespace Repositories.TestProject
     {
         public class OrderRepositoryUnitTests
         {
-            private readonly Mock<shopContext> _mockContext;
+            private readonly Mock<ShopContext> _mockContext;
             private readonly OrderRepository _orderRepository;
             private readonly Mock<DbSet<Order>> _mockOrderSet;
 
             public OrderRepositoryUnitTests()
             {
-                _mockContext = new Mock<shopContext>();
+                _mockContext = new Mock<ShopContext>();
                 _mockOrderSet = new Mock<DbSet<Order>>();
 
                 // Mock DbSet behavior

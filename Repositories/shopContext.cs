@@ -7,10 +7,10 @@ using Entities;
 
 namespace Repositories;
 
-public partial class shopContext : DbContext
+public partial class ShopContext : DbContext
 {
-    public shopContext() { }
-    public shopContext(DbContextOptions<shopContext> options)
+    public ShopContext() { }
+    public ShopContext(DbContextOptions<ShopContext> options)
         : base(options)
     {
     }

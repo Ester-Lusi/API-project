@@ -12,7 +12,7 @@ namespace TestProject
     {
 
         private readonly DBFixture _fixture;
-        private readonly shopContext _dbContext;
+        private readonly ShopContext _dbContext;
         private readonly ProductRepository _productRepository;
 
         public ProductsRepositoryIntegrationTests()

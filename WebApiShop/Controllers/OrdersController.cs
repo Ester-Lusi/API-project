@@ -33,13 +33,12 @@ namespace WebApiShop.Controllers
 
         // POST api/<OrdersController>
         [HttpPost]
-        public async Task<ActionResult<Order>> Post([FromBody] OrderDto order)
+        public async Task<ActionResult<OrderDto>> Post([FromBody] OrderDto order)
         {
             OrderDto orderResult = await _orderService.AddOrder(order);
             if (orderResult == null)
                 return BadRequest();
-            //return CreatedAtAction(nameof(GetOrderById), new { id = orderResult.OrderId }, orderResult);
-            return Ok(orderResult);
+            return CreatedAtAction(nameof(GetOrderById), new { id = orderResult.OrderId }, orderResult);
         }
 
     }

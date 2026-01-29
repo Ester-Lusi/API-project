@@ -1,6 +1,6 @@
 ﻿{
    "CodeGenerationMode": 5,
-   "ContextClassName": "shopContext",
+   "ContextClassName": "ShopContext",
    "ContextNamespace": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,

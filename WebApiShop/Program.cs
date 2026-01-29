@@ -21,8 +21,8 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 
-builder.Services.AddDbContext<shopContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("DeafultConnection")));
+builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("DeafultConnection"));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

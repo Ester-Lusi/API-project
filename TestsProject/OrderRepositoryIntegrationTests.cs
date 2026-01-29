@@ -12,7 +12,7 @@ namespace Repositories.Tests
 {
     public class OrderRepositoryIntegrationTests : IDisposable
     {
-        private readonly shopContext _context;
+        private readonly ShopContext _context;
         private readonly OrderRepository _orderRepository;
 
         public OrderRepositoryIntegrationTests(DBFixture fixture)

@@ -81,8 +81,10 @@ namespace WebApiShop.Controllers
 
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
-        public void DeleteUser(int id)
+        public ActionResult DeleteUser(int id)
         {
+            _userService.DeleteUser(id);
+            return NoContent();
         }
     }
 }
