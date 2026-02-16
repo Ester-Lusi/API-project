@@ -10,8 +10,8 @@ namespace Repositories
 {
     public class ProductRepository :IProductRepository
     {
-        shopContext _dbContext;
-        public ProductRepository(shopContext context)
+        ShopContext _dbContext;
+        public ProductRepository(ShopContext context)
         {
             _dbContext = context;
         }

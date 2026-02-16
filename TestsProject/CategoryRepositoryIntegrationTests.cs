@@ -30,8 +30,8 @@ namespace Repository.TestProject
         public async Task GetCategories_ReturnsAllCategories()
         {
             // Arrange
-            var category1 = new Category { /*CategoryId = 1,*/ CategoryName = "Category1" };
-            var category2 = new Category { /*CategoryId = 2,*/ CategoryName = "Category2" };
+            var category1 = new Category {CategoryName = "Category1" };
+            var category2 = new Category {CategoryName = "Category2" };
 
             await _dbContext.Categories.AddAsync(category1);
             await _dbContext.Categories.AddAsync(category2);

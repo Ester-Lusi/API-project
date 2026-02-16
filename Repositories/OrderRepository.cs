@@ -9,8 +9,8 @@ namespace Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        shopContext _dbContext;
-        public OrderRepository(shopContext context)
+        ShopContext _dbContext;
+        public OrderRepository(ShopContext context)
         {
             _dbContext = context;
         }

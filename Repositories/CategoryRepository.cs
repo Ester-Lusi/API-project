@@ -10,8 +10,8 @@ namespace Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
-        shopContext _dbContext;
-        public CategoryRepository(shopContext context)
+        ShopContext _dbContext;
+        public CategoryRepository(ShopContext context)
         {
             _dbContext = context;
         }
