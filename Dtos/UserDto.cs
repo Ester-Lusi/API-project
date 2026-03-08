@@ -5,6 +5,8 @@
         int Id,
         string FirstName,
         string LastName,
+        [Required]
+        [EmailAddress]
         string Email
     );
 }
