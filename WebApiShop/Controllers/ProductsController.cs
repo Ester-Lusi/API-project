@@ -11,7 +11,7 @@ namespace WebApiShop.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private IProductService _productService;
+        private readonly IProductService _productService;
         public ProductsController(IProductService productService)
         {
             _productService = productService;
@@ -23,5 +23,13 @@ namespace WebApiShop.Controllers
             return await _productService.GetProducts(name, categories, minPrice, maxPrice, position, skip, orderBy, description);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductDto>> Get(int id)
+        {
+            ProductDto product = await _productService.GetProductById(id);
+            if (product == null)
+                return NotFound();
+            return Ok(product);
+        }
     }
 }

@@ -11,19 +11,19 @@ namespace WebApiShop.Controllers
     [ApiController]
     public class PasswordController: ControllerBase
     {
-        private IPasswordService _passwordService;
+        private readonly IPasswordService _passwordService;
         public PasswordController(IPasswordService passwordService)
         {
             _passwordService = passwordService;
         }
 
         [HttpPost]
-        public ActionResult<Password> Post([FromBody] string password)
+        public ActionResult<int> PasswordScore([FromBody] string password)
         {
-            Password pass = _passwordService.GetStrength(password);
-            if (pass == null)
-                return NoContent();
-            return Ok(pass);
+            int strength = _passwordService.GetPasswordStrength(password);
+            if (strength == null)
+                  return NoContent();
+            return Ok(strength);
         }
     }
 }

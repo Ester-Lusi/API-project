@@ -105,6 +105,7 @@ async function Login() {
 
 //בדיקת חוזק סיסמא
 async function checkPasswordStrength() {
+    const progressBar = document.querySelector(".progressBar");
     try {
         const pass = document.querySelector("#password").value;
         const response = await fetch('https://localhost:44398/api/Password', {
@@ -115,17 +116,16 @@ async function checkPasswordStrength() {
             body: JSON.stringify(pass)
         });
         const data = await response.json();
-        const progressBar = document.querySelector(".progressBar");
         progressBar.value = data.strength*25;
         if (response.status == 200) {
             return data.strength / 4;
         }
         else {
-            return 0;
+            throw Error("Failed to check password strength");
         }
     }
     catch (e) {
-        console.log(e);
+        console.log(e.message);
     }
     progressBar.value = 0;
 }

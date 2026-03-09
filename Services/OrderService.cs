@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Dtos;
 using Entities;
+using Microsoft.Extensions.Logging;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,17 @@ namespace Services
 {
     public class OrderService : IOrderService
     {
-        IOrderRepository _iOrderRepository;
-        //AutoMapper _imapper;
-        IMapper _imapper;
-        public OrderService(IOrderRepository iOrderRepository, IMapper mapper)
+        private readonly IOrderRepository _iOrderRepository;
+        private readonly IProductRepository _iProductRepository;
+        private readonly IMapper _imapper;
+        private readonly ILogger<OrderService> _logger;
+
+        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository, IMapper mapper, ILogger<OrderService> logger)
         {
-            _iOrderRepository = iOrderRepository;
+            _iOrderRepository = orderRepository;
+            _iProductRepository = productRepository;
             _imapper = mapper;
+            _logger = logger;
         }
         public async Task<OrderDto> GetOrderById(int id)
         {
@@ -28,10 +33,30 @@ namespace Services
         }
         public async Task<OrderDto> AddOrder(OrderDto order)
         {
-            Order ord = _imapper.Map<Order>(order);
-            Order res = await _iOrderRepository.AddOrder(ord);
-            OrderDto orderDto = _imapper.Map<Order,OrderDto>(res);
-            return orderDto;
+            if (await CheckOrderSum(order))
+            { 
+                Order ord = _imapper.Map<Order>(order);
+                Order res = await _iOrderRepository.AddOrder(ord);
+                OrderDto orderDto = _imapper.Map<Order,OrderDto>(res);
+                return orderDto;
+            }
+            _logger.LogWarning("user id:" + order.UserId + "tried to close order with unmatched sum");
+            return null;
+        }
+
+
+        private async Task<bool> CheckOrderSum(OrderDto order)
+        {
+            decimal? sum = 0;
+            foreach (var item in order.OrderItems)
+            {
+                Product product = await _iProductRepository.GetProductById(item.ProductId);
+                if (product != null)
+                    sum += product.Price * item.Quantity;
+            }
+            if (sum == order.OrderSum)
+                return true;
+            return false;
         }
     }
 }

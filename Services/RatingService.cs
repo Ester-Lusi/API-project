@@ -10,7 +10,7 @@ namespace Services
 {
     public class RatingService : IRatingService
     {
-        IRatingRepository _iRatingRepository;
+        private readonly IRatingRepository _iRatingRepository;
         public RatingService(IRatingRepository iRatingRepository)
         {
             _iRatingRepository = iRatingRepository;

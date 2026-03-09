@@ -18,7 +18,7 @@ namespace Repositories.TestProject
         public class UserRepositoryUnitTests
         {
  
-            private readonly shopContext _shopContext;
+            private readonly ShopContext _shopContext;
             private readonly IUserRepository _userRepository;
 
             public UserRepositoryUnitTests(DBFixture fixture)
@@ -75,7 +75,7 @@ namespace Repositories.TestProject
                 var user = new User { Email = "user1@test.com", Password = "password1" };
                 await _userRepository.AddUser(user);
 
-                var loginUser = new LoginUser { Email = "user1@test.com", Password = "password1" };
+                var loginUser = new LoginUser ( "user1@test.com", "password1" );
 
                 // Act
                 var result = await _userRepository.FindUser(loginUser);
@@ -93,7 +93,7 @@ namespace Repositories.TestProject
                 var user = new User { Email = "user1@test.com", Password = "password1" };
                 await _userRepository.AddUser(user);
 
-                var loginUser = new LoginUser { Email = "user1@test.com", Password = "wrongpassword" };
+                var loginUser = new LoginUser ( "user1@test.com", "wrongpassword" );
 
                 // Act
                 var result = await _userRepository.FindUser(loginUser);

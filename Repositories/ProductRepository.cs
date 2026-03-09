@@ -10,7 +10,7 @@ namespace Repositories
 {
     public class ProductRepository :IProductRepository
     {
-        ShopContext _dbContext;
+        private readonly ShopContext _dbContext;
         public ProductRepository(ShopContext context)
         {
             _dbContext = context;
@@ -48,7 +48,10 @@ namespace Repositories
             var total = await query.CountAsync();
             return (products, total);
         }
-
+        public async Task<Product> GetProductById(int id)
+        {
+            return await _dbContext.Products.FindAsync(id);
+        }
     }
 }
 

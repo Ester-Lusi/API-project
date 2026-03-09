@@ -10,16 +10,16 @@ namespace TestProject
 {
     public class DBFixture
     {
-        public shopContext Context { get; private set; }
+        public ShopContext Context { get; private set; }
 
         public DBFixture()
         {
             // Set up the test database connection and initialize the context
-            var options = new DbContextOptionsBuilder<shopContext>()
+            var options = new DbContextOptionsBuilder<ShopContext>()
 
                 .UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=ShopTests;Trusted_Connection=True;")
                 .Options;
-            Context = new shopContext(options);
+            Context = new ShopContext(options);
             Context.Database.EnsureCreated();
         }
         public void Dispose()

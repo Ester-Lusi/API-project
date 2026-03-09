@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Dtos;
 using Entities;
+using NHibernate.Mapping.ByCode.Impl;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,8 @@ namespace Services
 {
     public class ProductService : IProductService
     {
-        IProductRepository _iProductRepository;
-        //AutoMapper _imapper;
-        IMapper _imapper;
+        private readonly IProductRepository _iProductRepository;
+        private readonly IMapper _imapper;
         public ProductService(IProductRepository iProductRepository, IMapper mapper)
         {
             _iProductRepository = iProductRepository;
@@ -32,6 +32,9 @@ namespace Services
             pageResponse.PageSize = skip;
             return pageResponse;
         }
-
+        public async Task<ProductDto> GetProductById(int id)
+        {
+            return _imapper.Map<Product, ProductDto>(await _iProductRepository.GetProductById(id));
+        }
     }
 }

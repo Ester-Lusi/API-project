@@ -14,7 +14,7 @@ namespace Repository.TestProject
     public class CategoryRepositoryTests : IClassFixture<DBFixture>
     {
         private readonly CategoryRepository _categoryRepository;
-        private readonly shopContext _context;
+        private readonly ShopContext _context;
 
         public CategoryRepositoryTests(DBFixture fixture)
         {

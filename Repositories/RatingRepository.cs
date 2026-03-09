@@ -9,7 +9,7 @@ namespace Repositories
 {
     public class RatingRepository : IRatingRepository
     {
-        ShopContext _dbcontext;
+        private readonly ShopContext _dbcontext;
         public RatingRepository(ShopContext context)
         {
             _dbcontext = context;

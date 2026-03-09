@@ -11,7 +11,7 @@ namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
-        ShopContext _dbContext;
+        private readonly ShopContext _dbContext;
         public UserRepository(ShopContext context)
         {
             _dbContext = context;

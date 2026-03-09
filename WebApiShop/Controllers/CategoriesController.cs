@@ -10,7 +10,7 @@ namespace WebApiShop.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private ICategoryService _icategoryService;
+        private readonly ICategoryService _icategoryService;
         public CategoriesController(ICategoryService icategoryService)
         {
             _icategoryService = icategoryService;

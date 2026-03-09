@@ -11,11 +11,12 @@ namespace Services
 {
     public class PasswordService :IPasswordService
     {
-        public Password GetStrength(string password)
+        public int GetPasswordStrength(string password)
         {
             var result = Zxcvbn.Core.EvaluatePassword(password);
-            Password pass = new() { Pass = password, Strength = result.Score };
-            return pass;
+            //Password pass = new() { Pass = password, Strength = result.Score };
+            //return pass;
+            return result.Score;
         }
     }
 }

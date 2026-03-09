@@ -13,6 +13,7 @@ public partial class ShopContext : DbContext
         : base(options)
     {
     }
+    public ShopContext() { }
 
     public virtual DbSet<Category> Categories { get; set; }
 

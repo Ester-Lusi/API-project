@@ -1,4 +1,6 @@
-﻿namespace Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Dtos
 {
     public record UserDto
     (

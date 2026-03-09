@@ -9,9 +9,9 @@ namespace Services
 {
     public class UserService :IUserService
     {
-        IUserRepository _iUserRepository;
-        IPasswordService _iPasswordService;
-        IMapper _imapper;
+        private readonly IUserRepository _iUserRepository;
+        private readonly IPasswordService _iPasswordService;
+        private readonly IMapper _imapper;
 
         public UserService(IUserRepository iUserRepository, IPasswordService iPasswordService, IMapper mapper)
         {
@@ -34,7 +34,7 @@ namespace Services
         }
         public async Task<UserDto> AddUser(UserDto user, string Password)
         {
-            if (_iPasswordService.GetStrength(Password).Strength < 2)
+            if (_iPasswordService.GetPasswordStrength(Password) < 2)
                 return null;
             User userDtoToUser = _imapper.Map<UserDto, User>(user);
             User user1 = await _iUserRepository.AddUser(userDtoToUser);
@@ -49,8 +49,8 @@ namespace Services
         }
         public async Task<bool> UpdateUser(int id, UserDto user, string Password)
         {
-            Password pass = _iPasswordService.GetStrength(Password);
-            if (pass.Strength < 2)
+            int pass = _iPasswordService.GetPasswordStrength(Password);
+            if (pass < 2)
                 return false;
             User userToUpdate = _imapper.Map<UserDto,User>(user);
             userToUpdate.Id = id;

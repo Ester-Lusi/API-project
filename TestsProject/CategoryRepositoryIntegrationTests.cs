@@ -12,7 +12,7 @@ namespace Repository.TestProject
     public class CategoryRepositoryIntegrationTests
     {
         private readonly DBFixture _fixture;
-        private readonly shopContext _dbContext;
+        private readonly ShopContext _dbContext;
         private readonly CategoryRepository _categoryRepository;
 
         public CategoryRepositoryIntegrationTests()

@@ -12,7 +12,7 @@ namespace TestProject
 {
     public class UserRepositoryIntegrationTests : IClassFixture<DBFixture>
     {
-            private readonly shopContext _context;
+            private readonly ShopContext _context;
             private readonly UserRepository _userRepository;
 
             public UserRepositoryIntegrationTests(DBFixture fixture)
@@ -78,7 +78,7 @@ namespace TestProject
                 var user = new User { Email = "user1@test.com", Password = "password1" };
                 await _userRepository.AddUser(user); // Add user to DB
 
-                var loginUser = new LoginUser { Email = "user1@test.com", Password = "password1" };
+                var loginUser = new LoginUser ("user1@test.com", "password1" );
 
                 // Act
                 var result = await _userRepository.FindUser(loginUser);
@@ -97,7 +97,7 @@ namespace TestProject
                 var user = new User { Email = "user1@test.com", Password = "password1" };
                 await _userRepository.AddUser(user); // Add user to DB
 
-                var loginUser = new LoginUser { Email = "user1@test.com", Password = "wrongpassword" };
+                var loginUser = new LoginUser("user1@test.com","wrongpassword" );
 
                 // Act
                 var result = await _userRepository.FindUser(loginUser);

@@ -14,13 +14,14 @@ namespace WebApiShop.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
-        IPasswordService _iPasswordService;
-        private ILogger<UsersController> _logger;
-        public UsersController(IUserService userService, ILogger<UsersController> logger)
+        private readonly IUserService _userService;
+        private readonly IPasswordService _iPasswordService;
+        private readonly ILogger<UsersController> _logger;
+        public UsersController(IUserService userService, ILogger<UsersController> logger, IPasswordService passwordService)
         {
             _userService = userService;
             _logger = logger;
+            _iPasswordService = passwordService;
         }
         // GET: api/<UsersController>
         [HttpGet]
@@ -42,18 +43,19 @@ namespace WebApiShop.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public async Task<ActionResult<UserDto>> Post([FromBody] UserDto user,string Password)
+        public async Task<ActionResult<UserDto>> Post([FromBody] UserDto user, string Password)
         {
-            Password password1 = _iPasswordService.GetStrength(Password);
-            if (password1.Strength < 2)
-                return BadRequest($"Password too weak (score: {password1.Strength}/4). Minimum required: 2");
-            UserDto userResult = await _userService.AddUser(user,Password);
+            int passwordCheck = _iPasswordService.GetPasswordStrength(Password);
+            if (passwordCheck < 2)
+                return BadRequest($"Password too weak (score: {passwordCheck}/4). Minimum required: 2");
+            UserDto userResult = await _userService.AddUser(user, Password);
             if (userResult == null)
             {
                 return BadRequest("The Password is not Strength Enough");
             }
             return CreatedAtAction(nameof(GetById), new { id = userResult.Id }, userResult);
         }
+
 
         [HttpPost("Login")]
         public async Task<ActionResult<UserDto>> Login([FromBody] LoginUser user)
@@ -79,10 +81,5 @@ namespace WebApiShop.Controllers
             return Ok(user);
         }
 
-        // DELETE api/<UsersController>/5
-        [HttpDelete("{id}")]
-        public void DeleteUser(int id)
-        {
-        }
     }
 }

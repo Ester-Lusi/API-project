@@ -11,7 +11,7 @@ namespace Repositories.TestProject
 {
     public class ProductsRepositoryUnitTests : IClassFixture<DBFixture>
     {
-        private readonly shopContext _context;
+        private readonly ShopContext _context;
 
         public ProductsRepositoryUnitTests(DBFixture fixture)
         {
@@ -78,7 +78,7 @@ namespace Repositories.TestProject
 
             var result = await repo.GetProducts(
                 name: null,
-                categories: new[] { 1 },
+                categories: new int?[] { 1 },
                 minPrice: null,
                 maxPrice: null,
                 position: null,

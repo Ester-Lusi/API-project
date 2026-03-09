@@ -6,8 +6,8 @@ namespace Dtos
     (
         int OrderId,
         DateOnly? OrderDate,
-        int OrderSum,
-        IEnumerable<OrderDto> OrderItems,
+        decimal OrderSum,
+        IEnumerable<OrderItemsDto> OrderItems,
         int UserId
     );
 }

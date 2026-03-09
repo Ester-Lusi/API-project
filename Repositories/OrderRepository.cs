@@ -9,7 +9,7 @@ namespace Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        ShopContext _dbContext;
+        private readonly ShopContext _dbContext;
         public OrderRepository(ShopContext context)
         {
             _dbContext = context;
